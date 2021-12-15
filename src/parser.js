@@ -68,6 +68,8 @@ function collectPosts(data, postTypes, config) {
 				frontmatter: {
 					title: getPostTitle(post),
 					date: getPostDate(post),
+					author: getPostAuthor(post),
+					thumbnailId: getPostThumbnailId(post),
 					categories: getCategories(post),
 					tags: getTags(post)
 				},
@@ -109,6 +111,10 @@ function getPostTitle(post) {
 	return post.title[0];
 }
 
+function getPostAuthor(post) {
+	return post['creator'][0]
+}
+
 function getPostDate(post) {
 	const dateTime = luxon.DateTime.fromRFC2822(post.pubDate[0], { zone: 'utc' });
 
@@ -119,6 +125,14 @@ function getPostDate(post) {
 	} else {
 		return dateTime.toISODate();
 	}
+}
+
+function getPostThumbnailId(post) {
+	const thumb = post.postmeta.find(m => m.meta_key[0] === '_thumbnail_id')
+	if (!thumb) {
+		return undefined
+	}
+	return thumb.meta_value[0]
 }
 
 function getCategories(post) {
