@@ -186,7 +186,8 @@ function mergeImagesIntoPosts(images, posts) {
 
 			// this image was uploaded as an attachment to this post
 			if (image.postId === post.meta.id) {
-				shouldAttach = true;
+				// これをコメントアウトすればアイキャッチのみ保存可能
+				// shouldAttach = true;
 			}
 
 			// this image was set as the featured image for this post
